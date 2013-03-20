@@ -1,1 +1,1 @@
-# TODO: add examples
+Bacon.constant(2).not("equal", 1).log()
