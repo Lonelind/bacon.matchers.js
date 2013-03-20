@@ -1,0 +1,13 @@
+# ignore IntelliJ IDEA project files
+.idea
+*.iml
+
+# ignore npm debug logs etc.
+*.log
+
+# ignore node local modules
+node_modules*
+
+# ignore unminified src
+unminified*
+
