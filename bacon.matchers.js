@@ -1,4 +1,4 @@
-Bacon.Observable.prototype.is = function() {
+Bacon.Observable.prototype.self = function() {
   return this;
 };
 
@@ -8,8 +8,12 @@ Bacon.Observable.prototype["in"] = function(list) {
   });
 };
 
-Bacon.Observable.prototype.equalTo = function(test) {
+Bacon.Observable.prototype.equalsTo = function(test) {
   return this.map(function(v) {
     return v === test;
   });
+};
+
+Bacon.Observable.prototype.isArray = function() {
+  return this instanceof Array;
 };

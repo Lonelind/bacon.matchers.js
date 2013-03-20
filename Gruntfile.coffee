@@ -6,6 +6,12 @@ module.exports = (grunt) ->
           bare: true
         files:
           "bacon.matchers.js": "src/bacon.matchers.coffee"
+      examples:
+        expand: true
+        cwd: "src/examples/"
+        src: ["*.coffee"]
+        dest: "examples/"
+        ext: ".js"
 
     uglify:
       matchers:
@@ -21,7 +27,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "default",
   [
-    "coffee", "uglify:matchers"
+    "coffee:matchers", "uglify", "coffee:examples"
   ]
 
 
