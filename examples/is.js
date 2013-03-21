@@ -32,6 +32,6 @@
   Bacon.constant({
     a: "12",
     b: "223434"
-  }).field("a").toNumber().isBetween(10, 12).log();
+  }).field("a").toNumber().isBetween(10, 15).log();
 
 }).call(this);
