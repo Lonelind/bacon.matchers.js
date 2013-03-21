@@ -73,14 +73,6 @@ Bacon.constant(2).in([1,2,3]) # true
 Bacon.constant(2).not("in", [1,2,3]) # false
 ```
 
-.get()
-------
-This wrapper returns a value, placed inside Bacon.Observable.
-```coffeescript
-Bacon.constant(10).get() # returns 10 as is
-Bacon.constant(10).isBetween(1,10).get() # true
-```
-
 Matchers
 =======
 
