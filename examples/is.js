@@ -1,7 +1,7 @@
 (function() {
   console.log("Bacon.constant(2).equal(1)");
 
-  Bacon.constant(2).equal(1).log();
+  Bacon.constant(2).equals(1).log();
 
   console.log("Bacon.constant(2).in([1,2,3])");
 
@@ -9,7 +9,7 @@
 
   console.log("Bacon.constant(2).is(\"equal\", 1)");
 
-  Bacon.constant(2).is("equal", 1).log();
+  Bacon.constant(2).is("equals", 1).log();
 
   console.log("Bacon.constant(\"STR\").matches(/.*S/)");
 
@@ -32,6 +32,8 @@
   Bacon.constant({
     a: "12",
     b: "223434"
-  }).field("a").toNumber().isBetween(10, 12).log();
+  }).field("a").toNumber().isBetween(10, 15).log();
+
+  console.log(Bacon.constant(2).get());
 
 }).call(this);
