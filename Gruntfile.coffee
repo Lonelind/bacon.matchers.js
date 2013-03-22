@@ -2,8 +2,6 @@ module.exports = (grunt) ->
   grunt.initConfig
     coffee:
       matchers:
-        options:
-          bare: true
         files:
           "bacon.matchers.js": "src/bacon.matchers.coffee"
       examples:
