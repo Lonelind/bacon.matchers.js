@@ -7,15 +7,21 @@ Observable::self = -> @
 #  @map (v) -> result = v
 #  result
 
-Observable::is = (matcher, args...) -> @[matcher]?.apply @, args
+#Observable::is = (matcher, args...) -> @[matcher]?.apply @, args
 
-Observable::not = (args...) ->
-  negate = !@is.apply(@, args)
-  Bacon.constant negate
+#Observable::not = (args...) ->
+#  negate = !@is.apply(@, args)
+#  Bacon.constant negate
 
-Observable::equals = (y) -> @map (x) -> x is y
+Observable::isEqual = (y) -> @self.map (x) -> x is y
+Observable::whereEqual = (y) -> @self.filter (x) -> x is y
 
-Observable::matches = (re) -> @map (x) -> re?.test x
+Observable::matches = (re) ->
+  @map (x) ->
+    if re?.test x
+      x
+    else
+      []
 
 Observable::field = (k) -> @map ".#{k}"
 
@@ -37,9 +43,14 @@ Observable::inRange = (a, b) ->
     @map (x) ->
       if a < b then a <= x <= b else b <= x <= a
     
-Observable::isBetween = (a, b) ->
+Observable::isBetween = (a, b = 0) ->
   if a is b
     @equals a
   else 
     @map (x) -> 
-      if a < b then a < x < b else b < x < a
+      test = if a < b then a < x < b else b < x < a
+      if test
+        x
+      else
+        []
+

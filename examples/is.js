@@ -34,6 +34,8 @@
     b: "223434"
   }).field("a").toNumber().isBetween(10, 15).log();
 
-  console.log(Bacon.constant(2).get());
+  Bacon.constant(2).equals(1).onError(function() {
+    return console.log("AAARGH!");
+  });
 
 }).call(this);

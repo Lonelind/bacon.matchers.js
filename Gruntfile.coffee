@@ -1,9 +1,12 @@
 module.exports = (grunt) ->
   grunt.initConfig
     coffee:
+      bacon:
+        files:
+          "lib/Bacon.js": "src/lib/Bacon.coffee"
       matchers:
         options:
-          bare: true
+          bare: false
         files:
           "bacon.matchers.js": "src/bacon.matchers.coffee"
       examples:
@@ -17,6 +20,9 @@ module.exports = (grunt) ->
       matchers:
         files:
           "bacon.matchers.min.js": "bacon.matchers.js"
+      bacon:
+        files:
+          "lib/Bacon.min.js": "lib/Bacon.js"
 
     coffeelint:
       app: ["src/*.coffee"]
@@ -27,7 +33,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "default",
   [
-    "coffee:matchers", "uglify", "coffee:examples"
+    "coffee:bacon", "uglify:bacon", "coffee:matchers", "uglify:matchers", "coffee:examples"
   ]
 
 

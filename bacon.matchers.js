@@ -1,89 +1,92 @@
-var Observable,
-  __slice = [].slice;
+(function() {
+  var Observable;
 
-Observable = Bacon.Observable;
+  Observable = Bacon.Observable;
 
-Observable.prototype.self = function() {
-  return this;
-};
+  Observable.prototype.self = function() {
+    return this;
+  };
 
-Observable.prototype.is = function() {
-  var args, matcher, _ref;
+  Observable.prototype.is.equal = function(y) {
+    return this.self.map(function(x) {
+      return x === y;
+    });
+  };
 
-  matcher = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-  return (_ref = this[matcher]) != null ? _ref.apply(this, args) : void 0;
-};
+  Observable.prototype.where.equal = function(y) {
+    return this.self.filter(function(x) {
+      return x === y;
+    });
+  };
 
-Observable.prototype.not = function() {
-  var args, negate;
+  Observable.prototype.matches = function(re) {
+    return this.map(function(x) {
+      if (re != null ? re.test(x) : void 0) {
+        return x;
+      } else {
+        return [];
+      }
+    });
+  };
 
-  args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  negate = !this.is.apply(this, args);
-  return Bacon.constant(negate);
-};
+  Observable.prototype.field = function(k) {
+    return this.map("." + k);
+  };
 
-Observable.prototype.equals = function(y) {
-  return this.map(function(x) {
-    return x === y;
-  });
-};
+  Observable.prototype.toNumber = function() {
+    return this.map(function(x) {
+      if (isFinite(x)) {
+        return parseFloat(x);
+      } else {
+        return x;
+      }
+    });
+  };
 
-Observable.prototype.matches = function(re) {
-  return this.map(function(x) {
-    return re != null ? re.test(x) : void 0;
-  });
-};
+  Observable.prototype["in"] = function(xs) {
+    return this.map(function(x) {
+      return Bacon._.contains(xs, x);
+    });
+  };
 
-Observable.prototype.field = function(k) {
-  return this.map("." + k);
-};
+  Observable.prototype.isArray = function() {
+    return this.map(function(x) {
+      return x instanceof Array;
+    });
+  };
 
-Observable.prototype.toNumber = function() {
-  return this.map(function(x) {
-    if (isFinite(x)) {
-      return parseFloat(x);
+  Observable.prototype.inRange = function(a, b) {
+    if (a === b) {
+      return this.equals(a);
     } else {
-      return x;
+      return this.map(function(x) {
+        if (a < b) {
+          return (a <= x && x <= b);
+        } else {
+          return (b <= x && x <= a);
+        }
+      });
     }
-  });
-};
+  };
 
-Observable.prototype["in"] = function(xs) {
-  return this.map(function(x) {
-    return Bacon._.contains(xs, x);
-  });
-};
+  Observable.prototype.isBetween = function(a, b) {
+    if (b == null) {
+      b = 0;
+    }
+    if (a === b) {
+      return this.equals(a);
+    } else {
+      return this.map(function(x) {
+        var test;
 
-Observable.prototype.isArray = function() {
-  return this.map(function(x) {
-    return x instanceof Array;
-  });
-};
+        test = a < b ? (a < x && x < b) : (b < x && x < a);
+        if (test) {
+          return x;
+        } else {
+          return [];
+        }
+      });
+    }
+  };
 
-Observable.prototype.inRange = function(a, b) {
-  if (a === b) {
-    return this.equals(a);
-  } else {
-    return this.map(function(x) {
-      if (a < b) {
-        return (a <= x && x <= b);
-      } else {
-        return (b <= x && x <= a);
-      }
-    });
-  }
-};
-
-Observable.prototype.isBetween = function(a, b) {
-  if (a === b) {
-    return this.equals(a);
-  } else {
-    return this.map(function(x) {
-      if (a < b) {
-        return (a < x && x < b);
-      } else {
-        return (b < x && x < a);
-      }
-    });
-  }
-};
+}).call(this);

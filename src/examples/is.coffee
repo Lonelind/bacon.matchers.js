@@ -22,4 +22,8 @@ Bacon.constant(1.9999999).isBetween(0,2).log()
 console.log "Bacon.constant({a : \"12\", b : \"223434\"}).field(\"a\").toNumber().isBetween(10,15)"
 Bacon.constant({a : "12", b : "223434"}).field("a").toNumber().isBetween(10,15).log()
 
-console.log Bacon.constant(2).get()
+
+
+
+
+Bacon.constant(2).equals(1).onError(->console.log "AAARGH!")#.assign((x)->console.log "TEST: %d", x)
